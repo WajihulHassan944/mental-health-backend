@@ -335,14 +335,14 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: 'vascularbundle43@gmail.com',
-    pass: 'gxauudkzvdvhdzbg',
+    user: 'lmtdhananjaya@gmail.com',
+    pass: 'qzyobcedmzktjhle',
   },
 });
 
 const storeMailOptions = {
   from: email,
-  to: "vascularbundle43@gmail.com",
+  to: "lmtdhananjaya@gmail.com",
   subject: `Message from ${name}:${subject}`,
   html: `
   <center>
@@ -350,7 +350,7 @@ const storeMailOptions = {
   padding: 5px;
 justify-content:center;
 align-items:center; overflow:hidden;
-margin-bottom: 20px;  border: 2px solid #379f00;
+margin-bottom: 20px;  border: 4px solid #379f00;
 ">
   <img src="https://i.ibb.co/hDBWQVv/myimg.png" alt="two" border="0" style=" 
   width:100%; aspect-ratio:1; object-fit:cover; border-radius:50%;">
@@ -367,7 +367,7 @@ margin-bottom: 20px;  border: 2px solid #379f00;
     `,
 };
 const userMailOptions = {
-  from: "vascularbundle43@gmail.com",
+  from: "lmtdhananjaya@gmail.com",
   to: email,
   subject: "Thilina Dhananjaya",
   html: `
@@ -376,7 +376,7 @@ const userMailOptions = {
   padding: 5px;
 justify-content:center;
 align-items:center; overflow:hidden;
-margin-bottom: 20px;  border: 2px solid #379f00;
+margin-bottom: 20px;  border: 4px solid #379f00;
 ">
   <img src="https://i.ibb.co/hDBWQVv/myimg.png" alt="two" border="0" style=" 
   width:100%; aspect-ratio:1; object-fit:cover; border-radius:50%;">
