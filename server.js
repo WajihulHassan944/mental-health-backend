@@ -319,6 +319,102 @@ app.get('/myForums', async (req, res) => {
 
 
 
+//code for contact form thilina
+
+
+app.post("/send-data-thilina", (req, res) => {
+  
+  const {  name , email , message, subject} = req.body;
+  console.log(name);
+  
+  const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'vascularbundle43@gmail.com',
+    pass: 'gxauudkzvdvhdzbg',
+  },
+});
+
+const storeMailOptions = {
+  from: email,
+  to: "vascularbundle43@gmail.com",
+  subject: `Message from ${name}:${subject}`,
+  html: `
+  <center>
+  <div style="width:80px; height:80px;border-radius:50%; display:flex; 
+  padding: 5px;
+justify-content:center;
+align-items:center; overflow:hidden;
+margin-bottom: 20px;  border: 2px solid #379f00;
+">
+  <img src="https://i.ibb.co/hDBWQVv/myimg.png" alt="two" border="0" style=" 
+  width:100%; aspect-ratio:1; object-fit:cover; border-radius:50%;">
+  </div></center>
+   
+  <center><h2 style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Great News!</h2></center>
+  <center><h2 style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 10px;"><span style="color: #379f00;">You have received a message from ${name}</span></h2></center>
+  <hr style="border: 0.5px solid black;">
+  <center><h3 style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; margin-bottom: 10px;">Message</h3></center>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; margin-bottom: 10px;">${message}</p>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; margin-top: 10px;">Contact: ${email}</p>
+
+    
+    `,
+};
+const userMailOptions = {
+  from: "vascularbundle43@gmail.com",
+  to: email,
+  subject: "Thilina Dhananjaya",
+  html: `
+  <center>
+  <div style="width:80px; height:80px;border-radius:50%; display:flex; 
+  padding: 5px;
+justify-content:center;
+align-items:center; overflow:hidden;
+margin-bottom: 20px;  border: 2px solid #379f00;
+">
+  <img src="https://i.ibb.co/hDBWQVv/myimg.png" alt="two" border="0" style=" 
+  width:100%; aspect-ratio:1; object-fit:cover; border-radius:50%;">
+  </div></center>
+   
+  <center><h2 style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Thank You, <span style="color: #379f00;">${name}</span>!</h2></center>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; margin-bottom: 10px;">Your query:</p>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; margin-bottom: 10px;">${message}</p>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5;">Your email has been received. Thank you for contacting Thilina Dhananjaya!</p>
+
+    `
+};
+
+// Send the email to the store
+transporter.sendMail(storeMailOptions, function(error, storeInfo) {
+  if (error) {
+    console.error(error);
+    res.status(500).send("Error sending email to store");
+  } else {
+    console.log("Email sent to store: " + storeInfo.response);
+
+    // Send the email to the user
+    transporter.sendMail(userMailOptions, function(error, userInfo) {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Error sending email to user");
+      } else {
+        console.log("Email sent to user: " + userInfo.response);
+        res.status(200).send("Order submitted successfully");
+      }
+    });
+  }
+});
+
+});
+
+
+
 
 app.get("/", (req,res) =>{
   res.send("Backend server has started running successfully...");
