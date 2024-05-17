@@ -508,6 +508,14 @@ app.get('/messages/:id', async (req, res) => {
 
 
 
+// Define route for fetching images
+app.get('/mymessages', async (req, res) => {
+  const images = await Conversation.find();
+  res.send(images);
+});
+
+
+
 
 
 
