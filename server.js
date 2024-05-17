@@ -416,6 +416,103 @@ transporter.sendMail(storeMailOptions, function(error, storeInfo) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+const conversationSchema = new mongoose.Schema({
+  userId: { type: String, required: true },
+  date: { type: String, required: true },
+  conversations: [
+    {
+      sender: { type: String, required: true, enum: ['user', 'chatbot'] },
+      message: { type: String, required: true }
+    }
+  ]
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
+
+const Conversation = mongoose.model('Conversation', conversationSchema);
+
+app.post('/messages', async (req, res) => {
+  const { userId, message, sender } = req.body;
+  const today = new Date().toISOString().slice(0, 10); // format YYYY-MM-DD
+
+  try {
+    let conversation = await Conversation.findOne({ userId, date: today });
+
+    if (!conversation) {
+      conversation = new Conversation({
+        userId,
+        date: today,
+        conversations: []
+      });
+    }
+
+    conversation.conversations.push({ sender, message });
+    await conversation.save();
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        message: 'Message added successfully'
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to store message'
+    });
+  }
+});
+
+
+
+
+
+
+app.get('/messages/:id', async (req, res) => {
+    const { userId } = req.params;
+  
+  try {
+    const conversations = await Conversation.find({ userId }).sort('date'); // Retrieves all conversations for the user and sorts them by date
+
+    if (!conversations.length) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'No conversations found for this user'
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: conversations.map(conv => ({
+        date: conv.date,
+        conversations: conv.conversations
+      }))
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to retrieve messages'
+    });
+  }
+});
+
+
+
+
+
+
+
+
 app.get("/", (req,res) =>{
   res.send("Backend server has started running successfully...");
 });
