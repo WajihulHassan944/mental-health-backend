@@ -517,6 +517,80 @@ app.get('/mymessages', async (req, res) => {
 
 
 
+// code for model website sending emails form
+
+
+app.post("/send-data-modal", (req, res) => {
+  
+  const {  name , email , message} = req.body;
+  console.log(name);
+  
+  const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'phoebechok1411@gmail.com',
+    pass: 'jfxluqtdvsekaxar',
+  },
+});
+
+const storeMailOptions = {
+  from: email,
+  to: "phoebechok1411@gmail.com",
+  subject: `Message from ${name}`,
+  html: `
+    <center><h2 style="color: #c8a97e;">Great News! <br> <span style="color:#212529">You have received a message from ${name}</span></h2></center>
+    <hr style="border: 2px solid #c8a97e;">
+    <center><h3>Message</h3></center>
+    <p> ${message}</p>
+    <p style="margin-top:10px;">Contact: ${email}</p>
+    
+    
+    `,
+};
+const userMailOptions = {
+  from: "phoebechok1411@gmail.com",
+  to: email,
+  subject: "Phoebe Chok",
+  html: `
+    <center><h2>Thanks <span style="color: #c8a97e;">${name}</span> for reaching out to me.<br><br> </h2></center>
+    <p>Here is your message:</p>
+    <p> ${message}</p>
+    
+    <p>Your email has been received. Thank you for choosing me! <br> Phoebe Chock, <br> Model</p>
+  
+    `
+};
+
+// Send the email to the store
+transporter.sendMail(storeMailOptions, function(error, storeInfo) {
+  if (error) {
+    console.error(error);
+    res.status(500).send("Error sending email to store");
+  } else {
+    console.log("Email sent to store: " + storeInfo.response);
+
+    // Send the email to the user
+    transporter.sendMail(userMailOptions, function(error, userInfo) {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Error sending email to user");
+      } else {
+        console.log("Email sent to user: " + userInfo.response);
+        res.status(200).send("Order submitted successfully");
+      }
+    });
+  }
+});
+
+});
+
+
+
 
 
 
