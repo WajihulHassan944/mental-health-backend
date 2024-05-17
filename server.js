@@ -478,7 +478,7 @@ app.post('/messages', async (req, res) => {
 
 
 
-app.get('/messages/:id', async (req, res) => {
+app.get('/messages/:userId', async (req, res) => {
     const { userId } = req.params;
   
   try {
