@@ -802,7 +802,7 @@ const transporter = nodemailer.createTransport({
 
 const storeMailOptions = {
   from: email,
-  to: "wajih786hassan@gmail.com",
+  to: "nurkhanov.u@gmail.com",
   subject: `Message from ${name}:${subject}`,
   html: `
   <center><img src="https://i.ibb.co/vkzr9Ty/ul-nurkh.png" alt="two" border="0" style=" margin-bottom: 20px; width:70px;
