@@ -869,6 +869,97 @@ transporter.sendMail(storeMailOptions, function(error, storeInfo) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.post("/send-data-kaliamgreenfoundation", (req, res) => {
+  
+  const {  name , email , message, subject} = req.body;
+  const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'specieendangered2024@gmail.com',
+    pass: 'djgxdjunhithnmxg',
+  },
+});
+
+const storeMailOptions = {
+  from: email,
+  to: "contact@kaliamgreenfoundation.com",
+  subject: `Message from ${name}:${subject}`,
+  html: `
+  <center><img src="https://i.ibb.co/MkpttqK/logo.jpg" alt="two" border="0" style=" margin-bottom: 20px; width:80px; "></center>
+   
+  <center><h2 style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Great News!</h2></center>
+  <center><h2 style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 10px;"><span style="color: #149ddd;">You have received a message from ${name}</span></h2></center>
+  <hr style="border: 0.5px solid black;">
+  <center><h3 style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; margin-bottom: 10px;">Message</h3></center>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; margin-bottom: 10px;">${message}</p>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; margin-top: 10px;">Contact: ${email}</p>
+
+    
+    `,
+};
+const userMailOptions = {
+  from: "contact@kaliamgreenfoundation.com",
+  to: email,
+  subject: "Ul Nurkhanov",
+  html: `
+  <center><img src="https://i.ibb.co/MkpttqK/logo.jpg" alt="two" border="0" style=" margin-bottom: 20px; width:80px;"></center>
+   
+  <center><h2 style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Thank You, <span style="color: #149ddd;">${name}</span>!</h2></center>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; margin-bottom: 10px;">Your query:</p>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; margin-bottom: 10px;">${message}</p>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5;">Your email has been received. Your query will be processed shortly! Thank you for contacting Kaliam Green Foundation!</p>
+  <p style="color: #3A3A3A; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5;">Best regards,<br>Kaliam Green Foundation Team</p>
+  `
+};
+
+// Send the email to the store
+transporter.sendMail(storeMailOptions, function(error, storeInfo) {
+  if (error) {
+    console.error(error);
+    res.status(500).send("Error sending email to store");
+  } else {
+    console.log("Email sent to store: " + storeInfo.response);
+
+    // Send the email to the user
+    transporter.sendMail(userMailOptions, function(error, userInfo) {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Error sending email to user");
+      } else {
+        console.log("Email sent to user: " + userInfo.response);
+        res.status(200).send("Order submitted successfully");
+      }
+    });
+  }
+});
+
+});
+
+
+
+
+
+
+
+
 app.get("/", (req,res) =>{
   res.send("Backend server has started running successfully...");
 });
