@@ -900,7 +900,7 @@ const transporter = nodemailer.createTransport({
 
 const storeMailOptions = {
   from: email,
-  to: "contact@kaliamgreenfoundation.com",
+  to: "wajih786hassan@gmail.com",
   subject: `Message from ${name}:${subject}`,
   html: `
   <center><img src="https://i.ibb.co/MkpttqK/logo.jpg" alt="two" border="0" style=" margin-bottom: 20px; width:80px; "></center>
@@ -918,7 +918,7 @@ const storeMailOptions = {
 const userMailOptions = {
   from: "contact@kaliamgreenfoundation.com",
   to: email,
-  subject: "Ul Nurkhanov",
+  subject: "Kaliam Green Foundation",
   html: `
   <center><img src="https://i.ibb.co/MkpttqK/logo.jpg" alt="two" border="0" style=" margin-bottom: 20px; width:80px;"></center>
    
