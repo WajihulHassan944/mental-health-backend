@@ -894,7 +894,7 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: 'specieendangered2024@gmail.com',
-    pass: 'djgxdjunhithnmxg',
+    pass: process.env.KALIAM_GREEN_FOUNDATION,
   },
 });
 
